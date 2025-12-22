@@ -1,34 +1,154 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* App.css - Additional styles for Income Insurance Claims App */
+
+.App {
+  min-height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+/* Override shadcn progress bar color */
+[data-testid="workflow-progress"] [role="progressbar"] > div {
+  background-color: #FF7600 !important;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+/* Agent card transitions */
+.agent-card {
+  transition: all 0.3s cubic-bezier(0.25, 0.4, 0.25, 1);
 }
 
-.App-link {
-    color: #61dafb;
+.agent-card.active {
+  border-color: #FF7600;
+  box-shadow: 0 0 0 3px rgba(255, 118, 0, 0.15), 0 12px 40px -12px rgba(255, 118, 0, 0.2);
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* Ensure proper button colors */
+button[data-testid="start-demo-btn"] {
+  background-color: #FF7600 !important;
+}
+
+button[data-testid="start-demo-btn"]:hover {
+  background-color: #E66A00 !important;
+}
+
+/* Terminal styling overrides */
+[data-testid="terminal-log"] {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Validation step animations */
+.validation-step {
+  transition: all 0.4s ease;
+}
+
+.validation-step.completed {
+  opacity: 1;
+}
+
+.validation-step.pending {
+  opacity: 0.5;
+}
+
+/* Custom badge colors for status */
+.status-active {
+  background-color: #DCFCE7 !important;
+  color: #166534 !important;
+  border: none !important;
+}
+
+.status-delayed {
+  background-color: #FEF3C7 !important;
+  color: #92400E !important;
+  border: none !important;
+}
+
+/* Scrollbar styling for main content areas */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 3px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1280px) {
+  main.grid {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  main.grid {
+    grid-template-columns: 1fr;
+  }
+
+  aside {
+    display: none;
+  }
+
+  section {
+    grid-column: span 12 !important;
+  }
+}
+
+/* Income gradient for logo and accents */
+.income-gradient {
+  background: linear-gradient(135deg, #FF7600 0%, #FF8F33 100%);
+}
+
+/* Glass effect for cards */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Pulse animation for active indicators */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+/* Cursor blink for terminal */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Log entry slide-in animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.log-entry {
+  animation: slideIn 0.3s ease-out forwards;
 }
