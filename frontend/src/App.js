@@ -78,10 +78,6 @@ const PolicyDetailsCard = ({ policy }) => (
         <p className="text-sm text-black">{policy?.policy_type || 'Comprehensive Travel Insurance'}</p>
       </div>
       <div>
-        <p className="text-xs font-bold text-black">Flight Delay Coverage</p>
-        <p className="text-sm font-semibold text-emerald-600" data-testid="delay-coverage">{policy?.flight_delay_coverage || '$100 per 6 hours'}</p>
-      </div>
-      <div>
         <p className="text-xs font-bold text-black">Status</p>
         <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 mt-1 text-xs font-bold" data-testid="policy-status">
           Active
