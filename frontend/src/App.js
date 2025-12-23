@@ -529,6 +529,20 @@ function App() {
     fetchScenario();
   };
 
+  // Show loading screen while waking up backend
+  if (wakingUp) {
+    return (
+      <div className="min-h-screen bg-[#F8FAFC] flex flex-col items-center justify-center">
+        <IncomeLogo />
+        <div className="mt-8 flex flex-col items-center gap-4">
+          <Loader2 className="w-10 h-10 text-[#FF7600] animate-spin" />
+          <p className="text-slate-600 text-sm font-medium">Initializing AI Agents...</p>
+          <p className="text-slate-400 text-xs">Preparing your demo experience</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
       {/* Header */}
