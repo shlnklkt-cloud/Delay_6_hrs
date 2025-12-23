@@ -347,17 +347,43 @@ function App() {
   const [logs, setLogs] = useState([]);
   const [activeAgent, setActiveAgent] = useState(null);
   const [claimDetails, setClaimDetails] = useState(null);
+  const [backendReady, setBackendReady] = useState(false);
+  const [wakingUp, setWakingUp] = useState(true);
 
-  // Fetch scenario on load and auto-start workflow
+  // Auto wake-up backend and start workflow
   useEffect(() => {
-    const initializeApp = async () => {
-      await fetchScenario();
-      // Auto-start workflow after scenario is loaded
-      setTimeout(() => {
-        startWorkflow();
-      }, 500);
+    const wakeUpBackend = async () => {
+      setWakingUp(true);
+      let retries = 0;
+      const maxRetries = 30; // Try for up to 60 seconds (30 * 2s)
+      
+      while (retries < maxRetries) {
+        try {
+          const response = await axios.get(`${API}/`, { timeout: 5000 });
+          if (response.status === 200) {
+            console.log("Backend is ready!");
+            setBackendReady(true);
+            setWakingUp(false);
+            // Now fetch scenario and start workflow
+            await fetchScenario();
+            setTimeout(() => {
+              startWorkflow();
+            }, 500);
+            return;
+          }
+        } catch (e) {
+          console.log(`Waking up backend... attempt ${retries + 1}/${maxRetries}`);
+          retries++;
+          await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds between retries
+        }
+      }
+      
+      // If we get here, backend didn't wake up
+      setWakingUp(false);
+      console.error("Failed to wake up backend after maximum retries");
     };
-    initializeApp();
+    
+    wakeUpBackend();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
